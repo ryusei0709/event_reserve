@@ -19,6 +19,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "create-vite": "^4.2.0"
+        "create-vite": "^4.2.0",
+        "flatpickr": "^4.6.13"
     }
 }
