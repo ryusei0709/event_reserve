@@ -34,7 +34,11 @@
                 <tbody>
                   <?php foreach ($events as $event) : ?>
                     <tr>
-                      <td class="px-4 py-3"><?php echo $event->name ?></td>
+                      <td class="px-4 py-3 text-blue-500">
+                        <a href="<?php echo route('events.show',['event' => $event->id]) ?>">
+                          <?php echo $event->name ?>
+                        </a>
+                      </td>
                       <td class="px-4 py-3"><?php echo $event->start_date ?></td>
                       <td class="px-4 py-3"><?php echo $event->end_date ?></td>
                       <td class="px-4 py-3 text-lg text-gray-900">後</td>
