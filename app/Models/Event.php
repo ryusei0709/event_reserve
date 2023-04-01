@@ -6,11 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Carbon\Carbon;
+// use App\Models\User;
+
 
 class Event extends Model
 {
     use HasFactory;
 
+    
     protected $fillable = [
         'name',
         'information',
@@ -28,6 +31,7 @@ class Event extends Model
             get: fn() => Carbon::parse($this->start_date)->format('Y年m月d日')
         );
 
+        
     }
 
     protected function editEventDate(): Attribute
@@ -56,6 +60,12 @@ class Event extends Model
             get: fn() => Carbon::parse($this->end_date)->format('H時i分')
         );
 
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class,'reservations')
+        ->withPivot('id','number_of_people','canceled_date');
     }
 
 }

@@ -5,11 +5,11 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="pt-4 pb-2">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
-                
+
                 <div class="max-w-2xl py-4 mx-auto">
                     <div>
                         <?php if (session()->has('status')) : ?>
@@ -57,16 +57,16 @@
                             </div>
 
                             <div class="flex space-x-4 justify-around">
-                            <?php if($event->is_visible) : ?>
-                                表示中
-                            <?php else  : ?>
-                                非表示
-                            <?php endif; ?>
+                                <?php if ($event->is_visible) : ?>
+                                    表示中
+                                <?php else : ?>
+                                    非表示
+                                <?php endif; ?>
                             </div>
-                            <?php if($event->event_date >= \Carbon\Carbon::today()->format('Y年m月d日') ) : ?>
-                            <x-jet-button class="ml-4">
-                                編集する
-                            </x-jet-button>
+                            <?php if ($event->event_date >= \Carbon\Carbon::today()->format('Y年m月d日')) : ?>
+                                <x-jet-button class="ml-4">
+                                    編集する
+                                </x-jet-button>
                             <?php endif; ?>
                         </div>
                     </form>
@@ -74,4 +74,38 @@
             </div>
         </div>
     </div>
+
+
+    <div class="py-4">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="max-w-2xl py-4 mx-auto">
+                    <?php if (!$users->isEmpty()) : ?>
+                        <div class="text-center py-4">
+                            予約状況
+                        </div>
+                        <table class="table-auto w-full text-left whitespace-no-wrap">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">予約者名</th>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">予約人数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($reservations as $reservation) : ?>
+                                    <?php if (is_null($reservation['canceled_date'])) : ?>
+                                        <tr>
+                                            <td class="px-4 py-3"><?php echo $reservation['name'] ?></td>
+                                            <td class="px-4 py-3"><?php echo $reservation['number_of_people'] ?></td>
+                                        </tr>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </x-app-layout>

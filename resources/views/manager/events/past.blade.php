@@ -33,13 +33,19 @@
                   <?php foreach ($events as $event) : ?>
                     <tr>
                       <td class="px-4 py-3 text-blue-500">
-                        <a href="<?php echo route('events.show',['event' => $event->id]) ?>">
+                        <a href="<?php echo route('events.show', ['event' => $event->id]) ?>">
                           <?php echo $event->name ?>
                         </a>
                       </td>
                       <td class="px-4 py-3"><?php echo $event->start_date ?></td>
                       <td class="px-4 py-3"><?php echo $event->end_date ?></td>
-                      <td class="px-4 py-3 text-lg text-gray-900">後</td>
+                      <td class="px-4 py-3 text-lg text-gray-900">
+                        <?php if (is_null($event->number_of_people)) : ?>
+                          0
+                        <?php else : ?>
+                          <?php echo $event->number_of_people ?>
+                        <?php endif; ?>
+                      </td>
                       <td class="px-4 text-center"><?php echo $event->max_people ?></td>
                       <td class="px-4 text-center"><?php echo $event->is_visible ?></td>
                     </tr>
@@ -49,9 +55,9 @@
             </div>
             <div class="flex justify-end">
               <!-- <nav aria-label="Pagination"> -->
-                <!-- <ul class="inline-flex items-center -space-x-px rounded-md text-sm shadow-sm"> -->
-                  {{ $events->links() }}
-                <!-- </ul> -->
+              <!-- <ul class="inline-flex items-center -space-x-px rounded-md text-sm shadow-sm"> -->
+              {{ $events->links() }}
+              <!-- </ul> -->
               <!-- </nav> -->
             </div>
           </div>

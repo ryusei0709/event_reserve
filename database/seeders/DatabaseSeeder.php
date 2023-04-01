@@ -23,10 +23,11 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         // seeder の呼び出し
+        Event::factory(100)->create();
         $this->call([
-            UserSeeder::class
+            UserSeeder::class,
+            ReservationsSeeder::class
         ]);
 
-        Event::factory(100)->create();
     }
 }
