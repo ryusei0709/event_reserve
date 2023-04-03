@@ -51,4 +51,3 @@ TailWindcss 3.xのJustInTime機能により、
 使ったHTML内のクラスのみ反映されるようになっていますので、
 HTMLを編集する際は、
 npm run watch も実行しながら編集するようにしてください。
-
