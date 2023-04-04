@@ -27,8 +27,6 @@ class EventController extends Controller
         ->whereNotNull('canceled_date')
         ->groupBy('event_id');
 
-        // dd($reservedPeople);
-
         $events = DB::table('events')
         ->leftJoinSub($reservedPeople, 'reservedPeople' , function($join) {
             $join->on('events.id' , '=' , 'reservedPeople.event_id');

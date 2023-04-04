@@ -15,19 +15,24 @@
                         <?php if (!is_null($events->firstWhere('start_date', $currentWeek[$i]['checkDay'] . ' ' . \Constant::EVENT_TIME[$j]))) : ?>
 
                             <?php
+
+                            $eventId = $events->firstWhere('start_date', $currentWeek[$i]['checkDay'] . ' ' . \Constant::EVENT_TIME[$j])->id;
+
                             $eventName = $events->firstWhere('start_date', $currentWeek[$i]['checkDay'] . ' ' . \Constant::EVENT_TIME[$j])->name;
                             $eventInfo = $events->firstWhere('start_date', $currentWeek[$i]['checkDay'] . ' ' . \Constant::EVENT_TIME[$j]);
                             // イベント開始時間と終了時間の差分をとる
                             $eventPriod = \Carbon\Carbon::parse($eventInfo->start_date)->diffInMinutes($eventInfo->end_date) / 30 - 1;
                             // echo $eventPriod;
                             ?>
-                            <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-blue-100">
-                                <?php echo $eventName  ?>
-                            </div>
+                            <a href="<?php echo route('events.detail', ['id' => $eventId]) ?>">
+                                <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-blue-100">
+                                    <?php echo $eventName  ?>
+                                </div>
+                            </a>
 
                             <?php if ($eventPriod > 0) : ?>
                                 <?php for ($k = 0; $k < $eventPriod; $k++) :  ?>
-                                    <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-blue-100"><?php echo $k ?></div>
+                                    <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-blue-100"></div>
                                 <?php endfor; ?>
                             <?php endif; ?>
 
