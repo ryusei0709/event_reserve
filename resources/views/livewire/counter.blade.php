@@ -11,6 +11,8 @@
     <!-- <input type="text" wire:model.lazy="name"> -->
     <input type="text" wire:model="name">
 
+    {{$test}} hello
+
     <br>
     <button wire:mouseover="mouseOver">on mouse!</button>
 

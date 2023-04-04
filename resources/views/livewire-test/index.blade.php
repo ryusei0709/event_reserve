@@ -19,6 +19,8 @@
     <?php endif; ?>
   </div>
 
+
+
   <livewire:counter>
 
 

@@ -3,6 +3,8 @@
 use App\Http\Controllers\LiveWireTestController;
 use App\Http\Controllers\AlpineTestController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\MyPageController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -18,18 +20,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('calendar');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified'
+// ])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('dashboard');
+//     })->name('dashboard');
+// });
 
 // 認証の追加
 // 
@@ -41,10 +43,18 @@ Route::prefix('manager')->middleware('can:manager-higher')
 
 Route::middleware('can:user-higher')
 ->group(function() {
-    Route::get('index', function () {
-        dd('user');
-    });
+    Route::get('/dashboard',[ReservationController::class , 'dashboard'])->name('dashboard');
+    Route::get('/mypage',[MyPageController::class , 'index'])->name('mypage.index');
+    Route::get('/mypage/{id}',[MyPageController::class , 'show'])->name('mypage.show');
+    Route::post('/mypage/{id}',[MyPageController::class , 'cancel'])->name('mypage.cancel');
+
+    // Route::get('/{id}',[ReservationController::class , 'detail'])->name('events.detail');
+    
+    Route::post('/{id}',[ReservationController::class , 'reserve'])->name('events.reserve');
 });
+
+Route::middleware('auth')->get('/{id}',[ReservationController::class , 'detail'])->name('events.detail');
+
 
 Route::controller(LiveWireTestController::class)
 ->prefix('livewire-test')->name('livewire-test.')->group(function() {

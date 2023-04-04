@@ -10,11 +10,14 @@ class Counter extends Component
     public $count = 0;
 
     public $name = '';
+    public $test = '';
 
     // constructor みたいなもの
     public function mount()
     {
         $this->name = 'mount';
+
+        $this->test = 'test';
     }
 
     //更新毎

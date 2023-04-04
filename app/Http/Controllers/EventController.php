@@ -8,6 +8,7 @@ use App\Models\Event;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Services\EventService;
+// use App\Constants\EventConst;
 
 class EventController extends Controller
 {
@@ -23,10 +24,8 @@ class EventController extends Controller
 
         $reservedPeople = DB::table('reservations')
         ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
-        ->whereNUll('canceled_date')
+        ->whereNotNull('canceled_date')
         ->groupBy('event_id');
-
-        // dd($reservedPeople);
 
         $events = DB::table('events')
         ->leftJoinSub($reservedPeople, 'reservedPeople' , function($join) {
