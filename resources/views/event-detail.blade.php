@@ -21,7 +21,7 @@
           <x-jet-validation-errors class="mb-4" />
 
           <form method="POST" action="<?php echo route('events.reserve', ['id' => $event->id]) ?>">
-          @csrf
+            @csrf
             <div>
               <x-jet-label for="event_name" value="イベント名" />
               <?php echo $event->name ?>
@@ -59,22 +59,29 @@
 
 
               <div class="mt-4">
-                <x-jet-label for="reserved_people" value="予約人数" />
-                
-                <select name="reserved_people">
-                  <?php for($i = 1; $i <= $reservablePeople; $i++) : ?>
-                  <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                  <?php endfor; ?>
-                </select>
-                
-
+                <?php if ($reservablePeople <= 0) : ?>
+                  <span class="text-red-500 text-xs">このイベントは満員です</span>
+                <?php else : ?>
+                  <x-jet-label for="reserved_people" value="予約人数" />
+                  <select name="reserved_people">
+                    <?php for ($i = 1; $i <= $reservablePeople; $i++) : ?>
+                      <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                    <?php endfor; ?>
+                  </select>
+                <?php endif;  ?>
               </div>
 
-              <input type="hidden" name="id" value="<?php echo $event->id ?>">
+              <?php if ($isReserved === null) : ?>
+                <input type="hidden" name="id" value="<?php echo $event->id ?>">
+                <?php if ($reservablePeople > 0) : ?>
+                  <x-jet-button class="ml-4">
+                    予約する
+                  </x-jet-button>
+                <?php endif; ?>
 
-              <x-jet-button class="ml-4">
-                予約する
-              </x-jet-button>
+              <?php else : ?>
+                <span class="text-xs">このイベント予約済です</span>
+              <?php endif; ?>
             </div>
           </form>
         </div>

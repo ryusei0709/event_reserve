@@ -23,7 +23,7 @@ class ReservationController extends Controller
         // 集計の際はhavingを利用する
         $reservedPeople = DB::table('reservations')
             ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
-            ->whereNotNull('canceled_date')
+            ->whereNull('canceled_date')
             ->groupBy('event_id')
             ->having('event_id', $event->id)
             ->first();
@@ -34,7 +34,16 @@ class ReservationController extends Controller
             $reservablePeople = $event->max_people;
         }
 
-        return view('event-detail', compact('event', 'reservablePeople'));
+
+        $isReserved = Reservation::where('user_id' , '=' , Auth::id())
+        ->where('event_id' , '=' , $id)
+        ->where('canceled_date', '=' , null)
+        ->latest()
+        ->first();
+
+        // dd($reservablePeople,$reservedPeople,$event,$event->id);
+
+        return view('event-detail', compact('event', 'reservablePeople', 'isReserved'));
     }
 
 
