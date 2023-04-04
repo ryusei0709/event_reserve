@@ -19,12 +19,14 @@ class MyPageController extends Controller
     {
 
         $user = User::findOrFail(Auth::id());
-        $evetns = $user->events;
+        $events = $user->events;
 
-        $fromTodayEvents = MyPageService::reservedEvent($evetns, 'fromToday');
-        $pastEvents = MyPageService::reservedEvent($evetns, 'past');
+        // dd($user, $events);
 
-        // dd($user, $evetns,$fromTodayEvents,$pastEvents);
+        $fromTodayEvents = MyPageService::reservedEvent($events, 'fromToday');
+        $pastEvents = MyPageService::reservedEvent($events, 'past');
+
+        // dd($user, $events,$fromTodayEvents,$pastEvents);
 
         return view('mypage.index', compact('fromTodayEvents','pastEvents'));
 

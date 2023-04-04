@@ -190,7 +190,7 @@ class EventController extends Controller
         
         $reservedPeople = DB::table('reservations')
         ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
-        ->whereNotNull('canceled_date')
+        ->whereNull('canceled_date')
         ->groupBy('event_id');
 
         $events = DB::table('events')

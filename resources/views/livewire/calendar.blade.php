@@ -4,7 +4,7 @@
     </div>
     <input id="calendar" class="block mt-1 mb-2 mx-auto" type="text" name="calendar" value="<?php echo $currentDate ?>" wire:change="getDate($event.target.value)" />
 
-    <div class="flex border border-green-400 mx-auto">
+    <div class="flex border mx-auto">
         <x-calendar-time />
         <?php for ($i = 0; $i < 7; $i++) : ?>
             <div class="w-32">
